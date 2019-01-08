@@ -6,6 +6,7 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var servetimeRouter = require("./routes/servetime")
 var storegoodsRouter = require('./routes/storegoods');
 var storesRouter = require('./routes/stores');
 var supplier = require('./routes/supplier');//供应商
@@ -39,6 +40,7 @@ app.use('/storegoods', storegoodsRouter);
 app.use('/stores', storesRouter);
 app.use('/supplier', supplier); //供应商
 app.use('/suppliergoods', suppliergoods);//供应商商品
+app.use('/servetime', servetimeRouter);//服务管理路由
 
 
 
