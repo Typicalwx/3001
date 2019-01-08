@@ -12,10 +12,10 @@ router.get('/', async function (req, res, next) {
 
 router.post('/', async function (req, res, next) {
     let { storeId, name, title, type, method, applySfc, exclusiveSfc,
-        total, packSfc, flavor, specialFuc, placeOfOrigin, date, shelfLife, features, price } = req.body
+        total, packSfc, flavor, specialFuc, placeOfOrigin, date, shelfLife, features, price, newPrice } = req.body
     let data = await client.post("/storegoods", {
         name, title, type, method, applySfc, exclusiveSfc,
-        total, packSfc, flavor, specialFuc, placeOfOrigin, date, shelfLife, features, price,
+        total, packSfc, flavor, specialFuc, placeOfOrigin, date, shelfLife, features, price, newPrice,
         store: {
             $ref: "stores",
             $id: storeId
@@ -37,11 +37,11 @@ router.get('/', async function (req, res, next) {
 
 router.put('/:id', async function (req, res, next) {
     let { id } = req.params
-    let {  name, title, type, method, applySfc, exclusiveSfc,
-        total, packSfc, flavor, specialFuc, placeOfOrigin, date, shelfLife, features, price } = req.body
+    let { name, title, type, method, applySfc, exclusiveSfc,
+        total, packSfc, flavor, specialFuc, placeOfOrigin, date, shelfLife, features, newPrice } = req.body
     await client.put("/storegoods/" + id, {
         name, title, type, method, applySfc, exclusiveSfc,
-        total, packSfc, flavor, specialFuc, placeOfOrigin, date, shelfLife, features, price
+        total, packSfc, flavor, specialFuc, placeOfOrigin, date, shelfLife, features, newPrice
     });
     res.send({ status: 1 })
 });
