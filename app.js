@@ -10,6 +10,7 @@ var storegoodsRouter = require('./routes/storegoods');
 var storesRouter = require('./routes/stores');
 var supplier = require('./routes/supplier');//供应商
 var suppliergoods = require('./routes/suppliergoods');//供应商商品
+var adminsRouter = require('./routes/admins');
 
 const session = require("express-session")
 var app = express();
@@ -39,6 +40,7 @@ app.use('/storegoods', storegoodsRouter);
 app.use('/stores', storesRouter);
 app.use('/supplier', supplier); //供应商
 app.use('/suppliergoods', suppliergoods);//供应商商品
+app.use('/admins', adminsRouter);
 
 
 
