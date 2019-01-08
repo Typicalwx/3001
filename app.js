@@ -35,16 +35,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-<<<<<<< HEAD
 app.use('/storegoods', storegoodsRouter);
 app.use('/stores', storesRouter);
-=======
 app.use('/supplier', supplier); //供应商
 app.use('/suppliergoods', suppliergoods);//供应商商品
 
 
 
->>>>>>> lilei
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
