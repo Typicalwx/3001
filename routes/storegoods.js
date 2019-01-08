@@ -5,14 +5,14 @@ client.url("127.0.0.1:8080");
 
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+router.get('/', async function (req, res, next) {
+    res.render('index', { title: 'Express' });
 });
 
 
-router.post('/', function (req, res, next) {
+router.post('/', async function (req, res, next) {
     let { storeId, name, title, type, method, applySfc, exclusiveSfc,
-        total, packSfc, flavor, specialFuc, placeOfOrigin, date, shelfLife, features, price } = req.query
+        total, packSfc, flavor, specialFuc, placeOfOrigin, date, shelfLife, features, price } = req.body
     let data = await client.post("/storegoods", {
         name, title, type, method, applySfc, exclusiveSfc,
         total, packSfc, flavor, specialFuc, placeOfOrigin, date, shelfLife, features, price,
@@ -25,8 +25,7 @@ router.post('/', function (req, res, next) {
     res.send({ status: 1 })
 });
 
-router.get('/', function (req, res, next) {
-    res.render('index', { title: 'Express' });
+router.get('/', async function (req, res, next) {
     let { type, value, page, rows, storeId } = req.query
     let obj = { [type]: value };
     let data = await client.get("/storegoods", {
@@ -36,18 +35,18 @@ router.get('/', function (req, res, next) {
     res.send(data)
 });
 
-router.put('/:id', function (req, res, next) {
+router.put('/:id', async function (req, res, next) {
     let { id } = req.params
-    let { storeId, name, title, type, method, applySfc, exclusiveSfc,
+    let {  name, title, type, method, applySfc, exclusiveSfc,
         total, packSfc, flavor, specialFuc, placeOfOrigin, date, shelfLife, features, price } = req.body
     await client.put("/storegoods/" + id, {
-        storeId, name, title, type, method, applySfc, exclusiveSfc,
+        name, title, type, method, applySfc, exclusiveSfc,
         total, packSfc, flavor, specialFuc, placeOfOrigin, date, shelfLife, features, price
     });
     res.send({ status: 1 })
 });
 
-router.delete('/:id', function (req, res, next) {
+router.delete('/:id', async function (req, res, next) {
     let { id } = req.params
     await client.delete("/storegoods/" + id);
     res.send({ status: 1 })
