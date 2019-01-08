@@ -5,9 +5,9 @@ client.url("127.0.0.1:8080");
 
 
 /* GET home page. */
-router.get('/', async function (req, res, next) {
-    res.render('index', { title: 'Express' });
-});
+// router.get('/', async function (req, res, next) {
+//     res.render('index', { title: 'Express' });
+// });
 
 
 router.post('/', async function (req, res, next) {
