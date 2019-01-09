@@ -11,7 +11,7 @@ client.url("127.0.0.1:8080");
 
 router.post('/', async function (req, res, next) {
     let { userId, name, number, licenseImage, addr, location, city,
-        legal, phone, storeImage, feature, commission, clerk } = req.body
+        legal, phone, storeImage, feature, commission, clerk, sales, images } = req.body
     clerk = JSON.parse(clerk);
     location = JSON.parse(location)
     let data = await client.post("/stores", {
