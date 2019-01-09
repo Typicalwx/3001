@@ -34,6 +34,13 @@ router.get('/', async function (req, res, next) {
     res.send(data);
 });
 
+// 通过id查询
+router.get('/:id', async function (req, res, next) {
+    let id = req.params.id
+    let data = await client.get("/suppliergoods/"+id,
+        { findType: "exact", submitType: "findJoin", ref: "supplier" })
+    res.send(data);
+});
 
 /*供应商品删除*/
 router.delete('/:id', async function (req, res, next) {
