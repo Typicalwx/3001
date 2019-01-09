@@ -14,6 +14,7 @@ router.post('/', async function (req, res, next) {
         legal, phone, storeImage, feature, commission, clerk, sales, images } = req.body
     clerk = JSON.parse(clerk);
     location = JSON.parse(location)
+    images = JSON.parse(location)
     let data = await client.post("/stores", {
         name, number, licenseImage, addr, location, city,
         legal, phone, storeImage, feature, commission, clerk, sales, images,
@@ -38,12 +39,13 @@ router.get('/', async function (req, res, next) {
 router.put('/:id', async function (req, res, next) {
     let { id } = req.params
     let { name, number, licenseImage, addr, location, city,
-        legal, phone, storeImage, feature, commission, clerk } = req.body
+        legal, phone, storeImage, feature, commission, clerk, images } = req.body
     clerk = JSON.parse(clerk);
     location = JSON.parse(location)
+    images = JSON.parse(location)
     await client.put("/stores/" + id, {
         name, number, licenseImage, addr, location, city,
-        legal, phone, storeImage, feature, commission, clerk
+        legal, phone, storeImage, feature, commission, clerk, images
     });
     res.send({ status: 1 })
 });
