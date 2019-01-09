@@ -16,7 +16,7 @@ router.post('/', async function (req, res, next) {
     location = JSON.parse(location)
     let data = await client.post("/stores", {
         name, number, licenseImage, addr, location, city,
-        legal, phone, storeImage, feature, commission, clerk,
+        legal, phone, storeImage, feature, commission, clerk, sales, images,
         user: {
             $ref: "users",
             $id: userId
