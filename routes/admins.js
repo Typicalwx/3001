@@ -4,7 +4,7 @@ const client = require("ykt-http-client");
 client.url("127.0.0.1:8080");
 
 
-/* 增加供应商详情 */
+/* 增加平台管理员详情 */
 router.post('/', async function (req, res, next) {
     let { name, addr, tel, usersId, img } = req.body
     await client.post("/admins", {
@@ -18,14 +18,14 @@ router.post('/', async function (req, res, next) {
 });
 
 
-/* 查询供应商详情 */
+/* 查询平台管理员详情 */
 router.get('/', async function (req, res, next) {
     let data = await client.get("/admins",
         { findType: "exact", submitType: "findJoin", ref: "users" })
     res.send(data);
 });
 
-/* 通过id查询供应商详情 */
+/* 通过id查询平台管理员详情 */
 router.get('/:id', async function (req, res, next) {
     let id = req.params.id
     let data = await client.get("/admins/" + id,
@@ -33,7 +33,7 @@ router.get('/:id', async function (req, res, next) {
     res.send(data);
 });
 
-/* 修改供应商详情 */
+/* 修改平台管理员详情 */
 router.put('/:id', async function (req, res, next) {
     let id = req.params.id
     let { name, addr, tel, usersId, img } = req.body
