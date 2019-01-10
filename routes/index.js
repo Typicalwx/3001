@@ -11,6 +11,23 @@ router.get('/', function (req, res, next) {
 });
 
 
+router.get('/getsession', function (req, res) {
+  res.send(req.session.users)
+
+  //老师的方法  注意点1
+ // res.send(req.session.users||{})
+ //在index.hmtl的老师的老师方法把注销打开
+});
+
+
+
+router.get('/remove', function (req, res) {
+  delete req.session.users;
+ 
+  res.send({ status: 1 })
+  //老师的方法，req.session.user=null 注意点1
+});
+
 router.post("/upload", async function (req, res) {
   let form = new multiparty.Form({
     uploadDir: "./public/upload"//手动在public下建一个upload文件，图片上传会存到这个文件
