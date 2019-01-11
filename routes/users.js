@@ -21,17 +21,22 @@ router.put('/:id', async function (req, res, next) {
 });
 
 // 通过id查询用户
-router.get('/:id', async function (req, res, next) {
-  let id = req.params.id
-  let data = await client.get("/users/" + id)
-  res.send(data);
+//判断登录名是否重复
+router.get('/account', async function (req, res) {
+  let { account } = req.query;
+  let data = await client.get("/users", { account, findType: "exact" });
+  if (data.length > 0) {
+    res.send({
+      status: 0
+    });
+  } else {
+    res.send({
+      status: 1
+    });
+  }
 });
 
-// 查询所有用户
-router.get('/', async function (req, res, next) {
-  let data = await client.get("/users")
-  res.send(data);
-});
+//判断电话号码重复
 router.get('/phone', async function (req, res) {
   let { phone } = req.query;
   let data = await client.get("/users", { phone, findType: "exact" });
@@ -45,25 +50,24 @@ router.get('/phone', async function (req, res) {
     });
   }
 });
-
-router.get('/account', async function (req, res) {
-  let { account } = req.query;
-  let data = await client.get("/wlm", { account, findType: "exact" });
-  if (data.length > 0) {
-    res.send({
-      status: 0
-    });
-  } else {
-    res.send({
-      status: 1
-    });
-  }
+router.get('/:id', async function (req, res, next) {
+  let id = req.params.id
+  let data = await client.get("/users/" + id)
+  res.send(data);
 });
+
+// 查询所有用户
+router.get('/', async function (req, res, next) {
+  let data = await client.get("/users")
+  res.send(data);
+});
+
+
 
 router.post('/login', async function (req, res) {
   let { account, pwd } = req.body;
   let data = await client.get("/users", { account, pwd, findType: "exact" });
-  console.log(data)
+  console.log(data, 123123123)
   if (data.length > 0) {
     console.log(data);
     req.session.users = data[0];
