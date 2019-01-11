@@ -37,18 +37,16 @@ router.get('/', async function (req, res, next) {
     if (!type) {
         type = "name"
     }
-    let obj = { [type]: value };
-    // console.log({
-    //     ...obj,
-    //     page, rows,
-    //     "store.$id": storeId,
-    //     submitType: "findJoin", ref: "stores",
-    //     // findType: "exact"
-    // })
+
+    let idname = "stores.$id"
+    if (!storeId) {
+        idname = "title"
+    }
+    let obj = { [type]: value, [idname]: storeId };
     let data = await client.get("/storegoods", {
         ...obj,
         page, rows,
-        "stores.$id": storeId,
+        // "stores.$id": storeId,
         submitType: "findJoin", ref: "stores",
         // findType: "exact"
     });

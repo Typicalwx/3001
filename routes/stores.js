@@ -29,8 +29,13 @@ router.post('/', async function (req, res, next) {
 router.get('/', async function (req, res, next) {
     let { userId } = req.query
     console.log(userId)
+    let type = "users.$id"
+    if (!userId) {
+        type = "name"
+    }
+    let obj = { [type]: userId }
     let data = await client.get("/stores", {
-        "users.$id": userId,
+        ...obj ,
         submitType: "findJoin", ref: "users",
     });
     console.log(data)
