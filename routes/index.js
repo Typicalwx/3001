@@ -5,11 +5,6 @@ client.url("127.0.0.1:8080");
 const multiparty = require("multiparty");
 const path = require("path");
 
-/* GET home page. */
-router.get('/', function (req, res, next) {
-  res.render('index', { title: 'Express' });
-});
-
 
 router.get('/getsession', function (req, res) {
   res.send(req.session.users)
@@ -27,6 +22,8 @@ router.get('/remove', function (req, res) {
   res.send({ status: 1 })
   //老师的方法，req.session.user=null 注意点1
 });
+
+
 
 router.post("/upload", async function (req, res) {
   let form = new multiparty.Form({

@@ -32,4 +32,52 @@ router.get('/', async function (req, res, next) {
   let data = await client.get("/users")
   res.send(data);
 });
+router.get('/phone', async function (req, res) {
+  let { phone } = req.query;
+  let data = await client.get("/users", { phone, findType: "exact" });
+  if (data.length > 0) {
+    res.send({
+      status: 0
+    });
+  } else {
+    res.send({
+      status: 1
+    });
+  }
+});
+
+router.get('/account', async function (req, res) {
+  let { account } = req.query;
+  let data = await client.get("/wlm", { account, findType: "exact" });
+  if (data.length > 0) {
+    res.send({
+      status: 0
+    });
+  } else {
+    res.send({
+      status: 1
+    });
+  }
+});
+
+router.post('/login', async function (req, res) {
+  let { account, pwd } = req.body;
+  let data = await client.get("/users", { account, pwd, findType: "exact" });
+  console.log(data)
+  if (data.length > 0) {
+    console.log(data);
+    req.session.users = data[0];
+    res.send({
+      data,
+      stats: 1
+    })
+  } else {
+    // console.log(data);
+    res.send({
+      stats: 0
+    })
+  }
+})
+
+
 module.exports = router;
