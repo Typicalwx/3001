@@ -17,8 +17,8 @@ router.post("/", async function (req, res) {
 })
 
 router.post("/petmaster", async function (req, res) {
-  let { phone, pwd } = req.body;
-  await client.post("/petmaster", { phone, pwd })
+  let {name,phone, pwd,addr} = req.body;
+  await client.post("/petmaster", {name,phone, pwd,addr })
   res.send({
     stats: 1
   })

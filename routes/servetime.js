@@ -8,10 +8,10 @@ client.url("127.0.0.1:8080");
 //服务路由
 router.post("/",async function (req,res) {
      let {servetype,pets,severname,guige,
-        servetime,serveresource,price,desc,storeId}= req.body;
+        servetime,serveresource,price,desc,storeId,goodState}= req.body;
         console.log(req.body)
      let data = await client.post("/serve", {servetype,pets,severname,guige,
-        servetime,serveresource,price,desc,
+        servetime,serveresource,price,desc,goodState
         // stores: {
         //         $ref: "stores",
         //         $id: storeId
