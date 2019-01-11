@@ -6,10 +6,10 @@ client.url("127.0.0.1:8080");
 
 /* 增加供应商详情 */
 router.post('/', async function (req, res, next) {
-    let { name, addr, phone, web, licenseImage, remark, tongji,
+    let { name, addr, phone, web, licenseImage, remark,
         usersId } = req.body
     await client.post("/supplier", {
-        name, addr, phone, web, licenseImage, remark, tongji,
+        name, addr, phone, web, licenseImage, remark,
         info: {
             $ref: "users",
             $id: usersId
