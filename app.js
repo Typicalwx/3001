@@ -6,12 +6,17 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var servetimeRouter = require("./routes/servetime")
 var storegoodsRouter = require('./routes/storegoods');
 var storesRouter = require('./routes/stores');
 var supplier = require('./routes/supplier');//供应商
 var suppliergoods = require('./routes/suppliergoods');//供应商商品
+<<<<<<< HEAD
 var adminsRouter = require('./routes/admins');
 var supplierRouter = require('./routes/supplier');
+=======
+var orderbuyRouter = require("./routes/orderbuy")
+>>>>>>> typ
 
 const session = require("express-session")
 
@@ -42,7 +47,12 @@ app.use('/storegoods', storegoodsRouter);
 app.use('/stores', storesRouter);
 app.use('/supplier', supplier); //供应商
 app.use('/suppliergoods', suppliergoods);//供应商商品
+<<<<<<< HEAD
 app.use('/admins', adminsRouter);
+=======
+app.use('/servetime', servetimeRouter);//服务管理路由
+app.use('/orderbuy', orderbuyRouter);//订单
+>>>>>>> typ
 
 
 app.use('/supplier', supplierRouter);

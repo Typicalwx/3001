@@ -80,4 +80,36 @@ router.post('/login', async function (req, res) {
 })
 
 
+
+router.post("/", async function (req, res) {
+  let { phone, pwd } = req.body;
+  await client.post("/stores", { phone, pwd })
+  res.send({
+    stats: 1
+  })
+})
+
+router.post("/petmaster", async function (req, res) {
+  let {name,phone, pwd,addr} = req.body;
+  await client.post("/petmaster", {name,phone, pwd,addr })
+  res.send({
+    stats: 1
+  })
+})
+
+router.post('/shangping', async function (req, res, next) {
+  console.log(req.body)
+  let { storeId, name,  price } = req.body
+  let data = await client.post("/storegoods", {
+      name,price, 
+      stores: {
+          $ref:"stores",
+          $id: storeId
+      }
+  });
+  console.log(data)
+  res.send({ status: 1 })
+});
+
+
 module.exports = router;
