@@ -52,8 +52,10 @@ app.use('/users', usersRouter);
 app.use('/storegoods', storegoodsRouter);
 app.use('/stores', storesRouter);
 app.use('/shops', shopsRouter);
+
 app.use('/supplier', supplier); //供应商
 app.use('/suppliergoods', suppliergoods);//供应商商品
+
 app.use('/admins', adminsRouter);
 app.use('/servetime', servetimeRouter);//服务管理路由
 app.use('/orderbuy', orderbuyRouter);//订单

@@ -8,9 +8,9 @@ client.url("127.0.0.1:8080");
 router.post("/", async function (req, res) {
   let { account, pwd, email, phone, name, role, state } = req.body;
   let data = await client.post("/users", { account, pwd, email, phone, name, role, state });
-  res.send({
+  res.send(
     data
-  })
+  )
 })
 // 修改用户
 router.put('/:id', async function (req, res, next) {
@@ -70,6 +70,9 @@ router.get('/', async function (req, res) {
     res.send(data);
   }
 });
+
+
+//判断电话号码重复
 router.get('/phone', async function (req, res) {
   let { phone } = req.query;
   let data = await client.get("/users", { phone, findType: "exact" });
@@ -83,10 +86,7 @@ router.get('/phone', async function (req, res) {
     });
   }
 });
-
-
-
-
+//判断登录名是否重复
 router.get('/account', async function (req, res) {
   let { account } = req.query;
   let data = await client.get("/users", { account, findType: "exact" });
@@ -101,17 +101,17 @@ router.get('/account', async function (req, res) {
   }
 });
 
+
+
+
 router.post('/login', async function (req, res) {
   let { account, pwd } = req.body;
   let data = await client.get("/users", { account, pwd, findType: "exact" });
-  console.log(data)
+  console.log(data, 123123123)
   if (data.length > 0) {
     console.log(data);
     req.session.users = data[0];
-    res.send({
-      data,
-      stats: 1
-    })
+    res.send(data[0])
   } else {
     // console.log(data);
     res.send({
