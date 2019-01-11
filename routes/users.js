@@ -71,10 +71,7 @@ router.post('/login', async function (req, res) {
   if (data.length > 0) {
     console.log(data);
     req.session.users = data[0];
-    res.send({
-      data,
-      stats: 1
-    })
+    res.send(data[0])
   } else {
     // console.log(data);
     res.send({
