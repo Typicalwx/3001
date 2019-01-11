@@ -3,6 +3,8 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const client = require("ykt-http-client");
+client.url("127.0.0.1:8080");
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -10,6 +12,8 @@ var storegoodsRouter = require('./routes/storegoods');
 var storesRouter = require('./routes/stores');
 var supplier = require('./routes/supplier');//供应商
 var suppliergoods = require('./routes/suppliergoods');//供应商商品
+var petownersRouter = require('./routes/petowners');//宠主
+var storeAdministratorRouter = require('./routes/storeAdministrator');//门店管理员
 
 const session = require("express-session")
 var app = express();
@@ -39,6 +43,10 @@ app.use('/storegoods', storegoodsRouter);
 app.use('/stores', storesRouter);
 app.use('/supplier', supplier); //供应商
 app.use('/suppliergoods', suppliergoods);//供应商商品
+
+app.use('/petowners', petownersRouter);
+app.use('/storeAdministrator', storeAdministratorRouter);
+
 
 
 

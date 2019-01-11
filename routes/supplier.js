@@ -3,7 +3,6 @@ var router = express.Router();
 const client = require("ykt-http-client");
 client.url("127.0.0.1:8080");
 
-
 /* 增加供应商详情 */
 router.post('/', async function (req, res, next) {
     let { supName, addr, tel, web, supImages, remark, tongji,
