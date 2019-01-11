@@ -7,9 +7,9 @@ client.url("127.0.0.1:8080");
 // 增加用户
 router.post("/", async function (req, res) {
   let { account, pwd, email, phone, name, role, state } = req.body;
-  await client.post("/users", { account, pwd, email, phone, name, role, state });
+  let data = await client.post("/users", { account, pwd, email, phone, name, role, state });
   res.send({
-    status: 1
+    data
   })
 })
 // 修改用户
@@ -46,9 +46,12 @@ router.get('/phone', async function (req, res) {
   }
 });
 
+
+
+
 router.get('/account', async function (req, res) {
   let { account } = req.query;
-  let data = await client.get("/wlm", { account, findType: "exact" });
+  let data = await client.get("/users", { account, findType: "exact" });
   if (data.length > 0) {
     res.send({
       status: 0
@@ -81,35 +84,27 @@ router.post('/login', async function (req, res) {
 
 
 
-router.post("/", async function (req, res) {
-  let { phone, pwd } = req.body;
-  await client.post("/stores", { phone, pwd })
-  res.send({
-    stats: 1
-  })
-})
+// router.post("/petmaster", async function (req, res) {
+//   let { name, phone, pwd, addr } = req.body;
+//   await client.post("/petmaster", { name, phone, pwd, addr })
+//   res.send({
+//     stats: 1
+//   })
+// })
 
-router.post("/petmaster", async function (req, res) {
-  let {name,phone, pwd,addr} = req.body;
-  await client.post("/petmaster", {name,phone, pwd,addr })
-  res.send({
-    stats: 1
-  })
-})
-
-router.post('/shangping', async function (req, res, next) {
-  console.log(req.body)
-  let { storeId, name,  price } = req.body
-  let data = await client.post("/storegoods", {
-      name,price, 
-      stores: {
-          $ref:"stores",
-          $id: storeId
-      }
-  });
-  console.log(data)
-  res.send({ status: 1 })
-});
+// router.post('/shangping', async function (req, res, next) {
+//   console.log(req.body)
+//   let { storeId, name, price } = req.body
+//   let data = await client.post("/storegoods", {
+//     name, price,
+//     stores: {
+//       $ref: "stores",
+//       $id: storeId
+//     }
+//   });
+//   console.log(data)
+//   res.send({ status: 1 })
+// });
 
 
 module.exports = router;
