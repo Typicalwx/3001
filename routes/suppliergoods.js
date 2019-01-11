@@ -50,7 +50,7 @@ router.get('/', async function (req, res, next) {
     let data = await client.get("/suppliergoods",
         {
             page, rows, submitType: "findJoin", ref: "supplier", ...q,
-            "supplier.$id": supplierId,  
+            "supplier.$id": supplierId,
             //集合里面关联了其他集合，想要通过内层集合的id获取外层集合，可以用内层关联的 (属性名 . $id : id)
         }
 
@@ -88,11 +88,11 @@ router.put('/:id', async function (req, res, next) {
         name, title, type, method, applySfc, exclusiveSfc,
         total, packSfc, flavor, SpecialFuc, placeOfOrigin,
         date, shelfLife, features, price, images,
-        supplier: {
-            $ref: "supplier",
-            $id: supplierId
-        }
-
+        // supplier: {
+        //     $ref: "supplier",
+        //     $id: supplierId
+        // }
+        // submitType: "findJoin", ref: "supplier"
     })
     res.send({ status: 1 });
 });
