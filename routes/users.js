@@ -28,9 +28,47 @@ router.get('/:id', async function (req, res, next) {
 });
 
 // 查询所有用户
-router.get('/', async function (req, res, next) {
-  let data = await client.get("/users")
-  res.send(data);
+// router.get('/', async function (req, res, next) {
+//   let { type, value } = req.query
+//   let data = await client.get("/users", { type, value })
+//   res.send(data);
+// });
+router.get('/', async function (req, res) {
+  let { page, rows, type, value, boll } = req.query;
+  let searchObj = {};
+  let arr = [];
+  if (type) {
+    searchObj = { [type]: value };
+  }
+  if (boll) {
+    let data = await client.get('/users/', { ...searchObj });
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].role == "普通会员" || data[i].role == "平台管理员") {
+        arr.push(data[i]);
+      }
+    }
+    let rowsData = []
+    for (let i = (page - 1) * rows; i < rows * page; i++) {
+      if (i < arr.length) {
+        rowsData.push(arr[i])
+      } else {
+        break;
+      }
+    }
+    let maxpage = Math.ceil(arr.length / rows);
+    let dataLast = {
+      curpage: page,
+      eachpage: rows,
+      maxpage: maxpage,
+      rows:
+        rowsData,
+      total: arr.length
+    }
+    res.send(dataLast)
+  } else {
+    let data = await client.get('/users/', { page, rows, ...searchObj });
+    res.send(data);
+  }
 });
 router.get('/phone', async function (req, res) {
   let { phone } = req.query;
