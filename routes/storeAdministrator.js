@@ -47,8 +47,6 @@ router.get('/all', async function (req, res, next) {
     res.send(data)
 });
 
-
-
 router.put('/:id', async function (req, res, next) {
     let { id } = req.params
     let { name, number, licenseImage, addr, location, city,
