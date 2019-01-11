@@ -3,7 +3,6 @@ var router = express.Router();
 const client = require("ykt-http-client");
 client.url("127.0.0.1:8080");
 
-
 /* 增加供应商详情 */
 router.post('/', async function (req, res, next) {
     let { name, addr, phone, web, licenseImage, remark,
@@ -22,9 +21,11 @@ router.post('/', async function (req, res, next) {
 
 /* 查询供应商详情 */
 router.get('/', async function (req, res, next) {
-    let data = await client.get("/supplier",
-        { findType: "exact", submitType: "findJoin", ref: "users" })
-    res.send(data);
+    let { userId } = req.query
+    let data = await client.get("/supplier", {
+        "info.$id": userId,
+    });
+    res.send(data)
 });
 
 /* 通过id查询供应商详情 */
