@@ -11,12 +11,12 @@ client.url("127.0.0.1:8080");
 
 
 router.post('/', async function (req, res, next) {
-    let { storeId, name, title, type, method, applySfc, exclusiveSfc,goodState,
+    let { storeId, name, title, type, method, applySfc, exclusiveSfc, goodState,
         total, packSfc, flavor, specialFuc, placeOfOrigin, date, shelfLife, features, price, newPrice, sales, images } = req.body
     console.log(images)
     images = JSON.parse(images)
     let data = await client.post("/storegoods", {
-        name, title, type, method, applySfc, exclusiveSfc,goodState,
+        name, title, type, method, applySfc, exclusiveSfc, goodState,
         total, packSfc, flavor, specialFuc, placeOfOrigin, date, shelfLife, features, price, newPrice, sales, images,
         store: {
             $ref: "stores",
@@ -32,6 +32,7 @@ router.get('/', async function (req, res, next) {
     console.log(type, value, page, rows, storeId)
     let obj = { [type]: value };
     let data = await client.get("/storegoods", {
+        ...obj,
         page, rows,
         "store.$id": storeId,
         submitType: "findJoin", ref: "stores",

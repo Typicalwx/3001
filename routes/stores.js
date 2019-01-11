@@ -30,7 +30,8 @@ router.get('/', async function (req, res, next) {
     let { userId } = req.query
     console.log(userId)
     let data = await client.get("/stores", {
-        "user.$id": userId
+        "user.$id": userId,
+        submitType: "findJoin", ref: "users",
     });
     console.log(data)
     res.send(data[0])
