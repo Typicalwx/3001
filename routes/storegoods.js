@@ -11,16 +11,20 @@ client.url("127.0.0.1:8080");
 
 
 router.post('/', async function (req, res, next) {
-    let { storeId, name, title, type, method, applySfc, exclusiveSfc, goodState,
+    let { supplierId, storeId, name, title, type, method, applySfc, exclusiveSfc, goodState,
         total, packSfc, flavor, specialFuc, placeOfOrigin, date, shelfLife, features, price, newPrice, sales, images } = req.body
     console.log(images)
     images = JSON.parse(images)
     let data = await client.post("/storegoods", {
         name, title, type, method, applySfc, exclusiveSfc, goodState,
         total, packSfc, flavor, specialFuc, placeOfOrigin, date, shelfLife, features, price, newPrice, sales, images,
-        store: {
+        stores: {
             $ref: "stores",
             $id: storeId
+        },
+        supplier: {
+            $ref: "supplier",
+            $id: supplierId
         }
     });
     console.log(data)
@@ -30,11 +34,19 @@ router.post('/', async function (req, res, next) {
 router.get('/', async function (req, res, next) {
     let { type, value, page, rows, storeId } = req.query
     console.log(type, value, page, rows, storeId)
-    let obj = { [type]: value };
+    if (!type) {
+        type = "name"
+    }
+
+    let idname = "stores.$id"
+    if (!storeId) {
+        idname = "title"
+    }
+    let obj = { [type]: value, [idname]: storeId };
     let data = await client.get("/storegoods", {
         ...obj,
         page, rows,
-        "store.$id": storeId,
+        // "stores.$id": storeId,
         submitType: "findJoin", ref: "stores",
         // findType: "exact"
     });

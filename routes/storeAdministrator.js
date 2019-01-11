@@ -4,11 +4,6 @@ const client = require("ykt-http-client");
 client.url("127.0.0.1:8080");
 
 
-/* GET home page. */
-// router.get('/', async function (req, res, next) {
-//     res.render('index', { title: 'Express' });
-// });
-
 router.post('/', async function (req, res, next) {
     let { userId, name, number, licenseImage, addr, location, city,
         legal, phone, storeImage, feature, commission, clerk } = req.body
@@ -17,7 +12,7 @@ router.post('/', async function (req, res, next) {
     let data = await client.post("/stores", {
         name, number, licenseImage, addr, location, city,
         legal, phone, storeImage, feature, commission, clerk,
-        users: {
+        user: {
             $ref: "users",
             $id: userId
         }
@@ -27,19 +22,16 @@ router.post('/', async function (req, res, next) {
 });
 
 router.get('/', async function (req, res, next) {
-    let { userId } = req.query
-    console.log(userId)
-    let type = "users.$id"
-    if (!userId) {
-        type = "name"
+    let { type, value, page, rows, usersId } = req.query;
+    let seraobj = {};
+    if (type) {
+        seraobj = { [type]: value }
     }
-    let obj = { [type]: userId }
     let data = await client.get("/stores", {
-        ...obj ,
-        submitType: "findJoin", ref: "users",
-    });
-    console.log(data)
-    res.send(data[0])
+        ...seraobj, submitType: "findJoin", ref: "users",
+    }
+    );
+    res.send(data)
 });
 
 
@@ -51,12 +43,10 @@ router.put('/:id', async function (req, res, next) {
     location = JSON.parse(location)
     await client.put("/stores/" + id, {
         name, number, licenseImage, addr, location, city,
-        legal, phone, storeImage, feature, commission, clerk,
+        legal, phone, storeImage, feature, commission, clerk
     });
-    // console.log(data)
     res.send({ status: 1 })
 });
-
 
 router.delete('/:id', async function (req, res, next) {
     let { id } = req.params
