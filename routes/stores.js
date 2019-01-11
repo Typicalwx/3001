@@ -17,7 +17,7 @@ router.post('/', async function (req, res, next) {
     let data = await client.post("/stores", {
         name, number, licenseImage, addr, location, city,
         legal, phone, storeImage, feature, commission, clerk,
-        user: {
+        users: {
             $ref: "users",
             $id: userId
         }
@@ -30,7 +30,7 @@ router.get('/', async function (req, res, next) {
     let { userId } = req.query
     console.log(userId)
     let data = await client.get("/stores", {
-        "user.$id": userId,
+        "users.$id": userId,
         submitType: "findJoin", ref: "users",
     });
     console.log(data)
