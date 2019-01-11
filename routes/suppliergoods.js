@@ -28,12 +28,43 @@ router.post('/', async function (req, res, next) {
 
 
 /*供应商品查询*/
+// router.get('/', async function (req, res, next) {
+//     let { page, rows, name, value } = req.query;
+//     let q = {};
+//     if (name) { //老师代码 包含模糊查询
+//         q = { [name]: value }
+//     }
+//     let data = await client.get("/suppliergoods",
+//         { page, rows, submitType: "findJoin", ref: "supplier", ...q })
+//     res.send(data);
+// });
+
+
+//关联查找
 router.get('/', async function (req, res, next) {
+    let { page, rows, name, value, supplierId } = req.query;
+    let q = {};
+    if (name) { //老师代码 包含模糊查询
+        q = { [name]: value }
+    }
     let data = await client.get("/suppliergoods",
-        { findType: "exact", submitType: "findJoin", ref: "supplier" })
+        {
+            page, rows, submitType: "findJoin", ref: "supplier", ...q,
+            "supplier.$id": supplierId,  
+            //集合里面关联了其他集合，想要通过内层集合的id获取外层集合，可以用内层关联的 (属性名 . $id : id)
+        }
+
+    )
     res.send(data);
 });
 
+// 通过id查询
+router.get('/:id', async function (req, res, next) {
+    let id = req.params.id
+    let data = await client.get("/suppliergoods/" + id,
+        { findType: "exact", submitType: "findJoin", ref: "supplier" })
+    res.send(data);
+});
 
 /*供应商品删除*/
 router.delete('/:id', async function (req, res, next) {
@@ -49,7 +80,8 @@ router.put('/:id', async function (req, res, next) {
     let {
         name, title, type, method, applySfc, exclusiveSfc,
         total, packSfc, flavor, SpecialFuc, placeOfOrigin,
-        date, shelfLife, features, price, images
+        date, shelfLife, features, price, images,
+        supplierId
     } = req.body
     images = images && JSON.parse(images)
     await client.put("/suppliergoods/" + id, {
