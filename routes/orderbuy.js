@@ -16,11 +16,26 @@ router.post('/', async function (req, res) {
     var fillterarr = newarr.filter(function (element, index, self) {
         return self.indexOf(element) === index;
     });
+
+   
+
+
+    let a = 1;
     for (let j = 0; j < fillterarr.length; j++) {
         let ordergoodarr = [];
         let orderservearr = [];
         let storeId;
         let ordertotal1 = 0;
+        a++;
+        var outTradeNo = "";  //订单号
+        for (var i = 0; i < 10; i++) //10位随机数，用以加在时间戳后面。
+        {
+            outTradeNo += Math.floor(Math.random() * 10);
+        }
+        outTradeNo = new Date().getTime() + outTradeNo + a;  //时间戳，用来生成订单号。
+
+
+
         for (let i = 0; i < shoppingtrolley1.length; i++) {
             if (shoppingtrolley1[i].storeId == fillterarr[j]) {
                 storeId = fillterarr[j]
@@ -43,10 +58,13 @@ router.post('/', async function (req, res) {
                 $ref: "petmaster",
                 $id: petmasterID
             },
+            outTradeNo,
             ordergoodarr,
             orderservearr,
             statebuy: false,
+            statebuytwo: "未发货",
             butornobuy: false,
+            butornobuytwo: "未付款",
             buytime: myDate.toLocaleDateString() + " " + myDate.toLocaleTimeString(),
             ordertotal1,
         })
@@ -55,7 +73,7 @@ router.post('/', async function (req, res) {
 });
 //查询已完成
 router.get("/orderbuied", async function (req, res) {
-  
+
     let { type, text, page, rows } = req.query;
     let seraobj = {};
     if (type) {
@@ -75,28 +93,30 @@ router.get("/:id", async function (req, res) {
 
 //查询未完成订单
 router.get("/", async function (req, res) {
-  
     let { type, text, page, rows } = req.query;
     let seraobj = {};
     if (type) {
         seraobj = { [type]: text }
     }
+
     let data = await client.get("/orderbuy", { page, rows, ...seraobj, submitType: "findJoin", ref: ["stores", "petmaster"] })
+    console.log(data)
     res.send(data);
 })
 
 //修改订单按钮
 router.put('/:id', async function (req, res, next) {
     let id = req.params.id
-    let { statebuy } = req.body
+    let { statebuy, statebuytwo } = req.body
     await client.put("/orderbuy/" + id, {
-        statebuy
+        statebuy,
+        statebuytwo,
     });
     let data = await client.get("/orderbuy/" + id)
     console.log(data)
     if (data.statebuy && data.butornobuy) {
-        await client.post("/orderbuied",data);
-        await client.delete("/orderbuy/"+id)
+        await client.post("/orderbuied", data);
+        await client.delete("/orderbuy/" + id)
     }
     res.send({ status: 1 })
 });
