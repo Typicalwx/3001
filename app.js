@@ -54,7 +54,6 @@ app.use('/shops', shopsRouter);
 
 app.use('/supplier', supplier); //供应商
 app.use('/suppliergoods', suppliergoods);//供应商商品
-<<<<<<< HEAD
 
 app.use('/admins', adminsRouter);
 app.use('/servetime', servetimeRouter);//服务管理路由
@@ -63,12 +62,8 @@ app.use('/orderbuy', orderbuyRouter);//订单
 app.use('/petowners', petownersRouter);
 app.use('/storeAdministrator', storeAdministratorRouter);
 
-=======
-app.use('/admins', adminsRouter);
-app.use('/servetime', servetimeRouter);//服务管理路由
-app.use('/orderbuy', orderbuyRouter);//订单
+
 app.use('/orderbuied', orderbuiedRouter);//订单
->>>>>>> typ
 
 
 app.use('/supplier', supplierRouter);
