@@ -15,14 +15,13 @@ var storesRouter = require('./routes/stores');
 var supplier = require('./routes/supplier');//供应商
 var suppliergoods = require('./routes/suppliergoods');//供应商商品
 
-var adminsRouter = require('./routes/admins');
-var supplierRouter = require('./routes/supplier');
-
-var orderbuyRouter = require("./routes/orderbuy")
-
 var petownersRouter = require('./routes/petowners');//宠主
 var storeAdministratorRouter = require('./routes/storeAdministrator');//门店管理员
 
+var adminsRouter = require('./routes/admins');
+var supplierRouter = require('./routes/supplier');
+var orderbuyRouter = require("./routes/orderbuy")
+var orderbuiedRouter = require("./routes/orderbuied")
 
 const session = require("express-session")
 
@@ -55,6 +54,7 @@ app.use('/shops', shopsRouter);
 
 app.use('/supplier', supplier); //供应商
 app.use('/suppliergoods', suppliergoods);//供应商商品
+<<<<<<< HEAD
 
 app.use('/admins', adminsRouter);
 app.use('/servetime', servetimeRouter);//服务管理路由
@@ -63,6 +63,12 @@ app.use('/orderbuy', orderbuyRouter);//订单
 app.use('/petowners', petownersRouter);
 app.use('/storeAdministrator', storeAdministratorRouter);
 
+=======
+app.use('/admins', adminsRouter);
+app.use('/servetime', servetimeRouter);//服务管理路由
+app.use('/orderbuy', orderbuyRouter);//订单
+app.use('/orderbuied', orderbuiedRouter);//订单
+>>>>>>> typ
 
 
 app.use('/supplier', supplierRouter);
