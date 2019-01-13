@@ -62,6 +62,7 @@ app.use('/storeAdministrator', storeAdministratorRouter);
 app.use('/admins', adminsRouter);
 app.use('/servetime', servetimeRouter);//服务管理路由
 app.use('/orderbuy', orderbuyRouter);//订单
+
 app.use('/orderbuied', orderbuiedRouter);//订单
 
 
