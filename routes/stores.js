@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 const client = require("ykt-http-client");
 client.url("127.0.0.1:8080");
-
+var axios = require("axios")
 
 /* GET home page. */
 // router.get('/', async function (req, res, next) {
@@ -10,11 +10,22 @@ client.url("127.0.0.1:8080");
 // });
 
 router.post('/', async function (req, res, next) {
-    let { userId, name, number, licenseImage, addr, location, city,
+    let { userId, name, number, licenseImage, addr, city,
         legal, phone, storeImage, feature, commission, clerk } = req.body
     clerk = JSON.parse(clerk);
-    location = JSON.parse(location)
-    let data = await client.post("/stores", {
+    console.log(addr)
+    let dataAddr = await axios({
+        url: "http://api.map.baidu.com/geocoder/v2/",
+        method: "get",
+        params: {
+            address: addr,
+            output: "json",
+            ak: "dt8FAGr2R28szj0i3FKEAaSZcHtvaBvC"
+        }
+    })
+    console.log(dataAddr.data.result.location)
+    location = dataAddr.data.result.location
+    await client.post("/stores", {
         name, number, licenseImage, addr, location, city,
         legal, phone, storeImage, feature, commission, clerk,
         users: {
@@ -22,24 +33,23 @@ router.post('/', async function (req, res, next) {
             $id: userId
         }
     });
-    // console.log(data)
     res.send({ status: 1 })
 });
 
 router.get('/', async function (req, res, next) {
     let { userId } = req.query
-    // console.log(userId)
+    console.log(userId)
     let type = "users.$id"
     if (!userId) {
         type = "name"
     }
     let obj = { [type]: userId }
     let data = await client.get("/stores", {
-        ...obj ,
+        ...obj,
         submitType: "findJoin", ref: "users",
     });
-    console.log(data.length)
-    console.log(data)
+    // console.log(data.length)
+    // console.log(data)
     res.send(data[0])
 });
 
@@ -56,7 +66,7 @@ router.get('/zhaoid', async function (req, res, next) {
     // let obj = { [type]: userId }
     let data = await client.get("/stores", {
         submitType: "findJoin", ref: "users",
-        "users.$id":userId,
+        "users.$id": userId,
     });
     console.log(data.length)
     console.log(data)
