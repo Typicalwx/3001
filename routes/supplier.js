@@ -9,7 +9,7 @@ router.post('/', async function (req, res, next) {
         usersId } = req.body
     await client.post("/supplier", {
         name, addr, phone, web, licenseImage, remark,
-        info: {
+        users: {
             $ref: "users",
             $id: usersId
         }

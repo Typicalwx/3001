@@ -14,6 +14,7 @@ var storegoodsRouter = require('./routes/storegoods');
 var storesRouter = require('./routes/stores');
 var supplier = require('./routes/supplier');//供应商
 var suppliergoods = require('./routes/suppliergoods');//供应商商品
+var platformsuppliersRouter = require('./routes/platformsuppliers');
 
 var adminsRouter = require('./routes/admins');
 var supplierRouter = require('./routes/supplier');
@@ -60,6 +61,7 @@ app.use('/orderbuy', orderbuyRouter);//订单
 
 app.use('/petowners', petownersRouter);
 app.use('/storeAdministrator', storeAdministratorRouter);
+app.use('/platformsuppliers', platformsuppliersRouter);
 
 
 
