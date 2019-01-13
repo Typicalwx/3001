@@ -11,25 +11,39 @@ router.post("/",async function (req,res) {
         servetime,serveresource,price,desc,storeId,goodState}= req.body;
         console.log(req.body)
      let data = await client.post("/serve", {servetype,pets,severname,guige,
-        servetime,serveresource,price,desc,goodState
-        // stores: {
-        //         $ref: "stores",
-        //         $id: storeId
-        //     }
+        servetime,serveresource,price,desc,goodState,
+        stores: {
+                $ref: "stores",
+                $id: storeId
+            }
         })
         res.send(data);
 })
 
 router.get("/", async function (req, res) {
-        let { type, text, page, rows } = req.query;
+        let { type, text, page, rows ,storeId} = req.query;
         let seraobj = {};
         if (type) { 
             seraobj = { [type]: text }
         }
-        let data = await client.get("/serve", { page, rows, ...seraobj, submitType: "findJoin", ref: "stores" })
+        let data = await client.get("/serve", { page, rows, ...seraobj,  "stores.$id": storeId,
+         submitType: "findJoin", ref: "stores" })
         res.send(data);
-    })
+})
     
+
+router.get("/deleteserve", async function (req, res) {
+        let { type, text, page, rows} = req.query;
+        let seraobj = {};
+        if (type) { 
+            seraobj = { [type]: text }
+        }
+        let data = await client.get("/serve", { page, rows, ...seraobj,
+         submitType: "findJoin", ref: "stores" })
+        res.send(data);
+})
+
+
 
 //删除
 router.delete("/:id",async function (req, res) {

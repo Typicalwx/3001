@@ -109,7 +109,7 @@ router.post('/login', async function (req, res) {
   let data = await client.get("/users", { account, pwd, findType: "exact" });
   console.log(data, 123123123)
   if (data.length > 0) {
-    console.log(data);
+    // console.log(data);
     req.session.users = data[0];
     res.send(data[0])
   } else {
@@ -119,6 +119,8 @@ router.post('/login', async function (req, res) {
     })
   }
 })
+
+
 
 
 
