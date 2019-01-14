@@ -4,16 +4,12 @@ const client = require("ykt-http-client");
 client.url("127.0.0.1:8080");
 
 
-/* GET home page. */
-// router.get('/', async function (req, res, next) {
-//     res.render('index', { title: 'Express' });
-// });
 
 
 router.post('/', async function (req, res, next) {
     let { supplierId, storeId, name, title, type, method, applySfc, exclusiveSfc, goodState,
         total, packSfc, flavor, specialFuc, placeOfOrigin, date, shelfLife, features, price, newPrice, sales, images } = req.body
-    console.log(images)
+    console.log(supplierId)
     images = JSON.parse(images)
     let data = await client.post("/storegoods", {
         name, title, type, method, applySfc, exclusiveSfc, goodState,

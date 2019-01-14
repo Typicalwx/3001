@@ -11,7 +11,7 @@ client.url("127.0.0.1:8080");
 
 router.get("/salesvolume", async function (req, res) {
     let { storeId } = req.query;
-    console.log(id)
+    console.log(storeId)
     let data = await client.get("/orderbuied", {
         "stores.$id": storeId,
         submitType: "findJoin", ref: "stores",
