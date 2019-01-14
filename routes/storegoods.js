@@ -18,8 +18,8 @@ router.post('/', async function (req, res, next) {
             $ref: "stores",
             $id: storeId
         },
-        supplier: {
-            $ref: "supplier",
+        suppliergoods: {
+            $ref: "suppliergoods",
             $id: supplierId
         }
     });
@@ -33,7 +33,6 @@ router.get('/', async function (req, res, next) {
     if (!type) {
         type = "name"
     }
-
     let idname = "stores.$id"
     if (!storeId) {
         idname = "title"
@@ -42,9 +41,7 @@ router.get('/', async function (req, res, next) {
     let data = await client.get("/storegoods", {
         ...obj,
         page, rows,
-        // "stores.$id": storeId,
         submitType: "findJoin", ref: "stores",
-        // findType: "exact"
     });
     console.log(data)
     res.send(data)
