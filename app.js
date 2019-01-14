@@ -14,6 +14,7 @@ var storegoodsRouter = require('./routes/storegoods');
 var storesRouter = require('./routes/stores');
 var supplier = require('./routes/supplier');//供应商
 var suppliergoods = require('./routes/suppliergoods');//供应商商品
+var platformsuppliersRouter = require('./routes/platformsuppliers');
 
 var petownersRouter = require('./routes/petowners');//宠主
 var storeAdministratorRouter = require('./routes/storeAdministrator');//门店管理员
@@ -58,6 +59,7 @@ app.use('/suppliergoods', suppliergoods);//供应商商品
 
 app.use('/petowners', petownersRouter);
 app.use('/storeAdministrator', storeAdministratorRouter);
+app.use('/platformsuppliers', platformsuppliersRouter);
 
 app.use('/admins', adminsRouter);
 app.use('/servetime', servetimeRouter);//服务管理路由
