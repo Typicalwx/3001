@@ -117,7 +117,7 @@ router.get('/', async function (req, res) {
 router.post('/login', async function (req, res) {
   let { account, pwd } = req.body;
   let data = await client.get("/users", { account, pwd, findType: "exact" });
-  console.log(data, 123123123)
+  console.log(data)
   if (data.length > 0) {
     // console.log(data);
     req.session.users = data[0];
