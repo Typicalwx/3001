@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 const client = require("ykt-http-client");
 client.url("127.0.0.1:8080");
+var axios = require("axios")
 
 // 获取各个城市的店铺数
 router.get("/counts", async function (req, res) {
@@ -29,29 +30,41 @@ router.get("/counts", async function (req, res) {
     if (ningbo[2] != 0) {
         shops.push(ningbo)
     }
-    console.log(shops)
     res.send(shops);
 });
 
 
 router.get("/", async function (req, res) {
+    let { lng, lat } = req.query;
+    console.log(lng, lat)
+    let dataone = await axios({
+        method: "get",
+        url: `http://api.map.baidu.com/geocoder/v2/?location=${lat},${lng}`,
+        params: {
+            output: "json",
+            ak: "RWyhbCT21EEcHX8R4P2A0Wi7nsIeROMr"
+        }
+    })
+    console.log(dataone.data.result.addressComponent.city)
     let data = await client.get("/stores")
+    let newarr = [];
     let arr = [];
     let stores = [];
     for (let i = 0; i < data.length; i++) {
-        stores.push(data[i].location.longitude);
-        stores.push(data[i].location.latitude);
-        stores.push(data[i].name);
-        stores.push(data[i].addr);
+        if (data[i].city == dataone.data.result.addressComponent.city) {
+            newarr.push(data[i])
+        }
+    }
+    console.log(newarr)
+    for (let i = 0; i < newarr.length; i++) {
+        stores.push(newarr[i].location.lng);
+        stores.push(newarr[i].location.lat);
+        stores.push(newarr[i].name);
+        stores.push(newarr[i].addr);
         arr.push(stores);
         stores = []
     }
-    // const shops = [
-    //     [104.062275, 30.685623, "爱心宠物店", "成都通锦大厦一楼"],
-    //     [104.079726, 30.64296, "蠢萌宠物店", "四川省成都市武侯区林荫中街8号"],
-    //     [104.119394, 30.672233, "玲珑宠物店", "建设南路1号"],
-    //     [104.077363, 30.600042, "卡哇伊宠物店", "天顺路225号"]
-    // ];
+    console.log(arr)
     res.send(arr);
 });
 module.exports = router;

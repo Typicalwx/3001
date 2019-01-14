@@ -7,6 +7,7 @@ const client = require("ykt-http-client");
 client.url("127.0.0.1:8080");
 
 var indexRouter = require('./routes/index');
+var showstoresRouter = require('./routes/showstores');
 var usersRouter = require('./routes/users');
 var servetimeRouter = require("./routes/servetime")
 var shopsRouter = require('./routes/shops');
@@ -52,7 +53,7 @@ app.use('/users', usersRouter);
 app.use('/storegoods', storegoodsRouter);
 app.use('/stores', storesRouter);
 app.use('/shops', shopsRouter);
-
+app.use('/showstores', showstoresRouter);
 app.use('/supplier', supplier); //供应商
 app.use('/suppliergoods', suppliergoods);//供应商商品
 

@@ -17,6 +17,15 @@ router.post('/', async function (req, res, next) {
     res.send({ status: 1 });
 });
 
+router.get('/:id', async function (req, res, next) {
+    let id = req.params.id
+    let data = await client.get("/supplier/" + id, {
+        submitType: "findJoin", ref: "users",
+    });
+    console.log(data)
+    res.send(data)
+});
+
 //查询
 // router.get('/', async function (req, res, next) {
 //     // let { usersId } = req.query
