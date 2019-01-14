@@ -7,19 +7,19 @@ client.url("127.0.0.1:8080");
 
 
 router.post('/', async function (req, res, next) {
-    let { supplierId, storeId, name, title, type, method, applySfc, exclusiveSfc, goodState,
+    let { supplierId, storeId, name, title, type, method, applySfc, exclusiveSfc, goodState,time,
         total, packSfc, flavor, specialFuc, placeOfOrigin, date, shelfLife, features, price, newPrice, sales, images } = req.body
     console.log(supplierId)
     images = JSON.parse(images)
     let data = await client.post("/storegoods", {
-        name, title, type, method, applySfc, exclusiveSfc, goodState,
+        name, title, type, method, applySfc, exclusiveSfc, goodState,time,
         total, packSfc, flavor, specialFuc, placeOfOrigin, date, shelfLife, features, price, newPrice, sales, images,
         stores: {
             $ref: "stores",
             $id: storeId
         },
-        suppliergoods: {
-            $ref: "suppliergoods",
+        supplier: {
+            $ref: "supplier",
             $id: supplierId
         }
     });

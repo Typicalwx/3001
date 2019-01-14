@@ -48,8 +48,6 @@ router.get('/', async function (req, res, next) {
         ...obj,
         submitType: "findJoin", ref: "users",
     });
-    // console.log(data.length)
-    // console.log(data)
     res.send(data[0])
 });
 
