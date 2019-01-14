@@ -3,11 +3,17 @@ var router = express.Router();
 const client = require("ykt-http-client");
 client.url("127.0.0.1:8080");
 
+// 查询所有已完成订单
+router.get("/orderbuied", async function (req, res) {
 
-/* GET home page. */
-// router.get('/', async function (req, res, next) {
-//     res.render('index', { title: 'Express' });
-// });
+    let { type, text } = req.query;
+    let seraobj = {};
+    if (type) {
+        seraobj = { [type]: text }
+    }
+    let data = await client.get("/orderbuied", {  ...seraobj, submitType: "findJoin", ref: ["stores", "petowners"] })
+    res.send(data);
+})
 
 router.post('/', async function (req, res, next) {
     let { userId, name, number, licenseImage, addr, location, city,
@@ -65,26 +71,6 @@ router.delete('/:id', async function (req, res, next) {
     res.send({ status: 1 })
 });
 
-// 注册验证
-router.get('/register', async function (req, res) {
-    let { phone, account } = req.query;
-    let data
-    if (account) {
-      data = await client.get("/users", { account, findType: "exact" });
-    } else if (phone) {
-      data = await client.get("/users", { phone, findType: "exact" });
-      
-    }
-    if (data.length > 0) {
-      res.send({
-        status: 0
-      });
-    } else {
-      res.send({
-        status: 1
-      });
-    }
-  });
 
 //统计各个年龄段的人数
 router.get('/ceshi',async function(req,res){
@@ -94,5 +80,8 @@ router.get('/ceshi',async function(req,res){
 
     res.send({axisData,seriesData});
 });
+
+
+
 
 module.exports = router;
