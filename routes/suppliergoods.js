@@ -47,14 +47,24 @@ router.get('/', async function (req, res, next) {
     if (name) { //老师代码 包含模糊查询
         q = { [name]: value }
     }
-    let data = await client.get("/suppliergoods",
-        {
-            page, rows, submitType: "findJoin", ref: "supplier", ...q,
-            "supplier.$id": supplierId,
-            //集合里面关联了其他集合，想要通过内层集合的id获取外层集合，可以用内层关联的 (属性名 . $id : id)
-        }
+    let data;
+    if (!supplierId) {
+        data = await client.get("/suppliergoods",
+            {
+                submitType: "findJoin", ref: "supplier", ...q,
+                //集合里面关联了其他集合，想要通过内层集合的id获取外层集合，可以用内层关联的 (属性名 . $id : id)
+            }
+        )
+    } else {
+        data = await client.get("/suppliergoods",
+            {
+                page, rows, submitType: "findJoin", ref: "supplier", ...q,
+                "supplier.$id": supplierId,
+                //集合里面关联了其他集合，想要通过内层集合的id获取外层集合，可以用内层关联的 (属性名 . $id : id)
+            }
 
-    )
+        )
+    }
     res.send(data);
 });
 
