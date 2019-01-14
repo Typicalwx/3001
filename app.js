@@ -53,11 +53,7 @@ app.use('/users', usersRouter);
 app.use('/storegoods', storegoodsRouter);
 app.use('/stores', storesRouter);
 app.use('/shops', shopsRouter);
-<<<<<<< HEAD
 app.use('/showstores', showstoresRouter);
-=======
-app.use('/stgoodssta', stgoodsstaRouter);
->>>>>>> 7ed489a21880ecbf51beba350cfdaca6e541025c
 app.use('/supplier', supplier); //供应商
 app.use('/suppliergoods', suppliergoods);//供应商商品
 
