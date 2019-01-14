@@ -16,7 +16,7 @@ router.get('/getsession', function (req, res) {
 // router.get('/', function(req, res, next) {
 //   res.render('index', { title: 'Express' });
 // });
-
+})
 router.get('/platform', async function (req, res) {
   let { page, rows, type, value, boll } = req.query;
   let searchObj = {};

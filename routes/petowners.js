@@ -4,10 +4,12 @@ const client = require("ykt-http-client");
 client.url("127.0.0.1:8080");
 
 router.post('/', async function (req, res, next) {
-    let { phone, Nickname, name, headerImg, addr, area, integral, pets, pwd } = req.body;
-    pets = JSON.parse(pets);
+    let { phone, Nickname, name, headerImg, addr, area, integral, pets, pwd, state } = req.body;
+    if (pets) { 
+        pets = JSON.parse(pets);
+     }
     let data = await client.post("/petowners", {
-        phone, Nickname, name, headerImg, addr, area, integral, pets, pwd,
+        phone, Nickname, name, headerImg, addr, area, integral, pets, pwd, state
         // MembershipCard: {
         //     $ref: "stores",
         //     $id: storeId
@@ -21,7 +23,7 @@ router.get('/', async function (req, res, next) {
     let { type, value, page, rows, storeId } = req.query
     let seraobj = {};
     if (type) {
-     
+
         seraobj = { [type]: value }
     }
     let data = await client.get("/petowners", { page, rows, ...seraobj, }
@@ -44,10 +46,13 @@ router.get('/:id', async function (req, res, next) {
 
 router.put('/:id', async function (req, res, next) {
     let { id } = req.params
-    let { phone, Nickname, name, headerImg, addr, area, integral, pets, pwd } = req.body;
-    pets = JSON.parse(pets);
+    let { phone, Nickname, name, headerImg, addr, area, integral, pets, pwd, state } = req.body;
+    if (pets) { 
+        pets = JSON.parse(pets);
+     }
+
     await client.put("/petowners/" + id, {
-        phone, Nickname, name, headerImg, addr, area, integral, pets, pwd,
+        phone, Nickname, name, headerImg, addr, area, integral, pets, pwd, state
         // MembershipCard: {
         //     $ref: "stores",
         //     $id: storeId
