@@ -39,6 +39,25 @@ router.post('/', async function (req, res, next) {
 //     res.send(data);
 // });
 
+//统计商品采购量
+router.get('/buytongji', async function (req, res, next) {
+    let { supplierId } = req.query
+    console.log("ididiidid", supplierId)
+    let data = await client.get("/storegoods",
+        {
+            submitType: "findJoin", ref: "stores",
+            "supplier.$id": supplierId
+        })
+    // let axisData = [];
+    let seriesData = [];
+    for (let i of data) {
+        // axisData.push(i.name);
+        seriesData.push({ name: i.name, value: i.total })
+    }
+    console.log(seriesData)
+    res.send({ seriesData, data });
+});
+
 
 //关联查找
 router.get('/', async function (req, res, next) {
@@ -106,5 +125,7 @@ router.put('/:id', async function (req, res, next) {
     })
     res.send({ status: 1 });
 });
+
+
 
 module.exports = router;

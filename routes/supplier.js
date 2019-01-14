@@ -54,12 +54,12 @@ router.get('/', async function (req, res, next) {
 
 
 /* 通过id查询供应商详情 */
-// router.get('/:id', async function (req, res, next) {
-//     let id = req.params.id
-//     let data = await client.get("/supplier/" + id,
-//         { findType: "exact", submitType: "findJoin", ref: "users" })
-//     res.send(data);
-// });
+router.get('/:id', async function (req, res, next) {
+    let id = req.params.id
+    let data = await client.get("/supplier/" + id,
+        { findType: "exact", submitType: "findJoin", ref: "users" })
+    res.send(data);
+});
 
 /* 修改供应商详情 */
 router.put('/:id', async function (req, res, next) {
