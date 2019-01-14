@@ -14,6 +14,9 @@ router.post('/', async function (req, res, next) {
             $id: usersId
         }
     })
+    await client.put("/users/" + usersId, {
+        xiangqingstate: 1
+    });
     res.send({ status: 1 });
 });
 

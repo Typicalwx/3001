@@ -40,8 +40,8 @@ router.get('/account', async function (req, res) {
 
 // 增加用户
 router.post("/", async function (req, res) {
-  let { account, pwd, email, phone, name, role, state } = req.body;
-  let data = await client.post("/users", { account, pwd, email, phone, name, role, state });
+  let { account, pwd, email, phone, name, role, state, xiangqingstate } = req.body;
+  let data = await client.post("/users", { account, pwd, email, phone, name, role, state, xiangqingstate });
   res.send(
     data
   )
