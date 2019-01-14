@@ -4,19 +4,15 @@ const client = require("ykt-http-client");
 client.url("127.0.0.1:8080");
 
 
-/* GET home page. */
-// router.get('/', async function (req, res, next) {
-//     res.render('index', { title: 'Express' });
-// });
 
 
 router.post('/', async function (req, res, next) {
-    let { supplierId, storeId, name, title, type, method, applySfc, exclusiveSfc, goodState,
+    let { supplierId, storeId, name, title, type, method, applySfc, exclusiveSfc, goodState,time,
         total, packSfc, flavor, specialFuc, placeOfOrigin, date, shelfLife, features, price, newPrice, sales, images } = req.body
-    console.log(images)
+    console.log(supplierId)
     images = JSON.parse(images)
     let data = await client.post("/storegoods", {
-        name, title, type, method, applySfc, exclusiveSfc, goodState,
+        name, title, type, method, applySfc, exclusiveSfc, goodState,time,
         total, packSfc, flavor, specialFuc, placeOfOrigin, date, shelfLife, features, price, newPrice, sales, images,
         stores: {
             $ref: "stores",
@@ -37,7 +33,6 @@ router.get('/', async function (req, res, next) {
     if (!type) {
         type = "name"
     }
-
     let idname = "stores.$id"
     if (!storeId) {
         idname = "title"
@@ -46,9 +41,7 @@ router.get('/', async function (req, res, next) {
     let data = await client.get("/storegoods", {
         ...obj,
         page, rows,
-        // "stores.$id": storeId,
         submitType: "findJoin", ref: "stores",
-        // findType: "exact"
     });
     console.log(data)
     res.send(data)

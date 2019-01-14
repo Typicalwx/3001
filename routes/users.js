@@ -40,8 +40,8 @@ router.get('/account', async function (req, res) {
 
 // 增加用户
 router.post("/", async function (req, res) {
-  let { account, pwd, email, phone, name, role, state } = req.body;
-  let data = await client.post("/users", { account, pwd, email, phone, name, role, state });
+  let { account, pwd, email, phone, name, role, state, xiangqingstate } = req.body;
+  let data = await client.post("/users", { account, pwd, email, phone, name, role, state, xiangqingstate });
   res.send(
     data
   )
@@ -117,7 +117,7 @@ router.get('/', async function (req, res) {
 router.post('/login', async function (req, res) {
   let { account, pwd } = req.body;
   let data = await client.get("/users", { account, pwd, findType: "exact" });
-  console.log(data, 123123123)
+  console.log(data)
   if (data.length > 0) {
     // console.log(data);
     req.session.users = data[0];

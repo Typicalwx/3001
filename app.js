@@ -7,6 +7,7 @@ const client = require("ykt-http-client");
 client.url("127.0.0.1:8080");
 
 var indexRouter = require('./routes/index');
+var showstoresRouter = require('./routes/showstores');
 var usersRouter = require('./routes/users');
 var servetimeRouter = require("./routes/servetime")
 var shopsRouter = require('./routes/shops');
@@ -14,6 +15,7 @@ var storegoodsRouter = require('./routes/storegoods');
 var storesRouter = require('./routes/stores');
 var supplier = require('./routes/supplier');//供应商
 var suppliergoods = require('./routes/suppliergoods');//供应商商品
+var platformsuppliersRouter = require('./routes/platformsuppliers');
 
 var petownersRouter = require('./routes/petowners');//宠主
 var storeAdministratorRouter = require('./routes/storeAdministrator');//门店管理员
@@ -51,13 +53,18 @@ app.use('/users', usersRouter);
 app.use('/storegoods', storegoodsRouter);
 app.use('/stores', storesRouter);
 app.use('/shops', shopsRouter);
+<<<<<<< HEAD
+app.use('/showstores', showstoresRouter);
+=======
 app.use('/stgoodssta', stgoodsstaRouter);
+>>>>>>> 7ed489a21880ecbf51beba350cfdaca6e541025c
 app.use('/supplier', supplier); //供应商
 app.use('/suppliergoods', suppliergoods);//供应商商品
 
 
 app.use('/petowners', petownersRouter);
 app.use('/storeAdministrator', storeAdministratorRouter);
+app.use('/platformsuppliers', platformsuppliersRouter);
 
 app.use('/admins', adminsRouter);
 app.use('/servetime', servetimeRouter);//服务管理路由

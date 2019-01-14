@@ -14,7 +14,19 @@ router.post('/', async function (req, res, next) {
             $id: usersId
         }
     })
+    await client.put("/users/" + usersId, {
+        xiangqingstate: 1
+    });
     res.send({ status: 1 });
+});
+
+router.get('/:id', async function (req, res, next) {
+    let id = req.params.id
+    let data = await client.get("/supplier/" + id, {
+        submitType: "findJoin", ref: "users",
+    });
+    console.log(data)
+    res.send(data)
 });
 
 //查询
