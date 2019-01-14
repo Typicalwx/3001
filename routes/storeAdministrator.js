@@ -6,22 +6,26 @@ client.url("127.0.0.1:8080");
 // 查询所有已完成订单
 router.get("/orderbuied", async function (req, res) {
 
-    let { type, text } = req.query;
+    let { type, text, page, rows } = req.query;
     let seraobj = {};
     if (type) {
         seraobj = { [type]: text }
     }
-    let data = await client.get("/orderbuied", {  ...seraobj, submitType: "findJoin", ref: ["stores", "petowners"] })
+    let data = await client.get("/orderbuied", { page, rows, ...seraobj, submitType: "findJoin", ref: ["stores", "petmaster"] })
+    // data.forEach(function (ele) {
+    //     console.log(ele);
+    //     res.send(ele.ordergoodarr);
+    // });
     res.send(data);
 })
 
 router.post('/', async function (req, res, next) {
     let { userId, name, number, licenseImage, addr, location, city,
         legal, phone, storeImage, feature, commission, clerk } = req.body
-        if(clerk||location){
-    clerk = JSON.parse(clerk);
-    location = JSON.parse(location)
-        }
+    if (clerk || location) {
+        clerk = JSON.parse(clerk);
+        location = JSON.parse(location)
+    }
 
     let data = await client.post("/stores", {
         name, number, licenseImage, addr, location, city,
@@ -42,7 +46,7 @@ router.get('/all', async function (req, res, next) {
     if (type) {
         seraobj = { [type]: value }
     }
-    let data = await client.get("/stores", { page, rows, ...seraobj, submitType: "findJoin", ref: "users",});
+    let data = await client.get("/stores", { page, rows, ...seraobj, submitType: "findJoin", ref: "users", });
     res.send(
         data,
     )
@@ -50,14 +54,14 @@ router.get('/all', async function (req, res, next) {
 
 router.put('/:id', async function (req, res, next) {
     let { id } = req.params
-    let { name, number, licenseImage, addr,  city,
-        legal, phone, storeImage, feature,location, commission } = req.body
-        if(location){
-    location = JSON.parse(location)
+    let { name, number, licenseImage, addr, city,
+        legal, phone, storeImage, feature, location, commission } = req.body
+    if (location) {
+        location = JSON.parse(location)
     }
 
     await client.put("/stores/" + id, {
-        name, number, licenseImage, addr,  city,
+        name, number, licenseImage, addr, city,
         legal, phone, storeImage, feature, commission, location
     });
     // console.log(data)
@@ -73,12 +77,12 @@ router.delete('/:id', async function (req, res, next) {
 
 
 //统计各个年龄段的人数
-router.get('/ceshi',async function(req,res){
+router.get('/ceshi', async function (req, res) {
     // let data = await client.get("/students");
-    let axisData = ["18岁以下","18到30岁","30岁以上"];
-    let seriesData = [{name:"18岁以下",value:10},{name:"18到30岁",value:22},{name:"30到50岁",value:500},{name:"50到60岁",value:10},{name:"50岁以上",value:50}];
+    let axisData = ["18岁以下", "18到30岁", "30岁以上"];
+    let seriesData = [{ name: "18岁以下", value: 10 }, { name: "18到30岁", value: 22 }, { name: "30到50岁", value: 500 }, { name: "50到60岁", value: 10 }, { name: "50岁以上", value: 50 }];
 
-    res.send({axisData,seriesData});
+    res.send({ axisData, seriesData });
 });
 
 
