@@ -38,8 +38,8 @@ router.get('/', async function (req, res, next) {
         ...obj ,
         submitType: "findJoin", ref: "users",
     });
-    console.log(data.length)
-    console.log(data)
+    // console.log(data.length)
+    // console.log(data)
     res.send(data[0])
 });
 
@@ -48,7 +48,7 @@ router.get('/', async function (req, res, next) {
 
 router.get('/zhaoid', async function (req, res, next) {
     let { userId } = req.query
-    console.log(userId)
+    // console.log(userId)
     // let type = "users.$id"
     // // if (!userId) {
     // //     type = "name"
@@ -58,8 +58,8 @@ router.get('/zhaoid', async function (req, res, next) {
         submitType: "findJoin", ref: "users",
         "users.$id":userId,
     });
-    console.log(data.length)
-    console.log(data)
+    // console.log(data.length)
+    // console.log(data)
     res.send(data[0])
 });
 

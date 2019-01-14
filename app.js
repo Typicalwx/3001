@@ -22,7 +22,7 @@ var adminsRouter = require('./routes/admins');
 var supplierRouter = require('./routes/supplier');
 var orderbuyRouter = require("./routes/orderbuy")
 var orderbuiedRouter = require("./routes/orderbuied")
-
+var storeservetongjiRouter = require("./routes/storeservetongji")
 const session = require("express-session")
 
 var app = express();
@@ -62,7 +62,7 @@ app.use('/orderbuy', orderbuyRouter);//订单
 app.use('/petowners', petownersRouter);
 app.use('/storeAdministrator', storeAdministratorRouter);
 
-
+app.use("/storeservetongji",storeservetongjiRouter)
 app.use('/orderbuied', orderbuiedRouter);//订单
 
 
