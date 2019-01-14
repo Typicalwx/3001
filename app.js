@@ -24,7 +24,7 @@ var adminsRouter = require('./routes/admins');
 var supplierRouter = require('./routes/supplier');
 var orderbuyRouter = require("./routes/orderbuy")
 var orderbuiedRouter = require("./routes/orderbuied")
-
+var stgoodsstaRouter = require("./routes/stgoodssta")
 const session = require("express-session")
 
 var app = express();
@@ -53,7 +53,11 @@ app.use('/users', usersRouter);
 app.use('/storegoods', storegoodsRouter);
 app.use('/stores', storesRouter);
 app.use('/shops', shopsRouter);
+<<<<<<< HEAD
 app.use('/showstores', showstoresRouter);
+=======
+app.use('/stgoodssta', stgoodsstaRouter);
+>>>>>>> 7ed489a21880ecbf51beba350cfdaca6e541025c
 app.use('/supplier', supplier); //供应商
 app.use('/suppliergoods', suppliergoods);//供应商商品
 

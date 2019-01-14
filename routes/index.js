@@ -10,13 +10,13 @@ router.get('/getsession', function (req, res) {
   res.send(req.session.users)
 
   //老师的方法  注意点1
- // res.send(req.session.users||{})
- //在index.hmtl的老师的老师方法把注销打开
-/* GET home page. */
-// router.get('/', function(req, res, next) {
-//   res.render('index', { title: 'Express' });
-});
-
+  // res.send(req.session.users||{})
+  //在index.hmtl的老师的老师方法把注销打开
+  /* GET home page. */
+  // router.get('/', function(req, res, next) {
+  //   res.render('index', { title: 'Express' });
+  // });
+})
 router.get('/platform', async function (req, res) {
   let { page, rows, type, value, boll } = req.query;
   let searchObj = {};
@@ -61,21 +61,12 @@ router.get('/platform', async function (req, res) {
 
 router.get('/remove', function (req, res) {
   delete req.session.users;
- 
+
   res.send({ status: 1 })
   //老师的方法，req.session.user=null 注意点1
 });
 
-router.put('/:id', async function (req, res, next) {
-  let id = req.params.id
-  let { xiangqingstate } = req.body
-  console.log(id,xiangqingstate)
- let data =  await client.put("/users/" + id, {
-    xiangqingstate
-  });
-  console.log("修改后的data",data)
-  res.send({ status: 1 })
-});
+
 
 router.post("/upload", async function (req, res) {
   let form = new multiparty.Form({
