@@ -4,6 +4,26 @@ const client = require("ykt-http-client");
 client.url("127.0.0.1:8080");
 /* GET users listing. */
 
+
+router.get('/register', async function (req, res) {
+  let { phone, account } = req.query;
+  let data
+  if (account) {
+    data = await client.get("/users", { account, findType: "exact" });
+  } else if (phone) {
+    data = await client.get("/users", { phone, findType: "exact" });
+    
+  }
+  if (data.length > 0) {
+    res.send({
+      status: 0
+    });
+  } else {
+    res.send({
+      status: 1
+    });
+  }
+});
 // 增加用户
 router.post("/", async function (req, res) {
   let { account, pwd, email, phone, name, role, state } = req.body;
@@ -18,6 +38,38 @@ router.put('/:id', async function (req, res, next) {
   let { account, pwd, email, phone, name, role, state } = req.body
   await client.put("/users/" + id, { account, pwd, email, phone, name, role, state })
   res.send({ status: 1 });
+});
+
+
+router.get('/phone', async function (req, res) {
+  let { phone } = req.query;
+  let data = await client.get("/users", { phone, findType: "exact" });
+  if (data.length > 0) {
+    res.send({
+      status: 0
+    });
+  } else {
+    res.send({
+      status: 1
+    });
+  }
+});
+
+
+
+
+router.get('/account', async function (req, res) {
+  let { account } = req.query;
+  let data = await client.get("/users", { account, findType: "exact" });
+  if (data.length > 0) {
+    res.send({
+      status: 0
+    });
+  } else {
+    res.send({
+      status: 1
+    });
+  }
 });
 
 // 通过id查询用户
@@ -71,35 +123,6 @@ router.get('/', async function (req, res) {
   }
 });
 
-
-//判断电话号码重复
-router.get('/phone', async function (req, res) {
-  let { phone } = req.query;
-  let data = await client.get("/users", { phone, findType: "exact" });
-  if (data.length > 0) {
-    res.send({
-      status: 0
-    });
-  } else {
-    res.send({
-      status: 1
-    });
-  }
-});
-//判断登录名是否重复
-router.get('/account', async function (req, res) {
-  let { account } = req.query;
-  let data = await client.get("/users", { account, findType: "exact" });
-  if (data.length > 0) {
-    res.send({
-      status: 0
-    });
-  } else {
-    res.send({
-      status: 1
-    });
-  }
-});
 
 
 
