@@ -50,12 +50,17 @@ router.get('/buytongji', async function (req, res, next) {
         })
     // let axisData = [];
     let seriesData = [];
+    let buiedSeriesData = [];
+
     for (let i of data) {
         // axisData.push(i.name);
         seriesData.push({ name: i.name, value: i.total })
+        buiedSeriesData.push({ name: i.name, value: i.sales })
     }
-    console.log(seriesData)
-    res.send({ seriesData, data });
+    console.log("seriesData", seriesData)
+    console.log("buiedSeriesData", buiedSeriesData)
+
+    res.send({ seriesData, data, buiedSeriesData });
 });
 
 
