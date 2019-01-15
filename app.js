@@ -26,6 +26,7 @@ var orderbuyRouter = require("./routes/orderbuy")
 var orderbuiedRouter = require("./routes/orderbuied")
 var stgoodsstaRouter = require("./routes/stgoodssta")
 var storeservetongjiRouter = require("./routes/storeservetongji")
+var storegoodtongjiRouter = require("./routes/storegoodtongji")
 const session = require("express-session")
 
 var app = express();
@@ -68,6 +69,7 @@ app.use('/admins', adminsRouter);
 app.use('/servetime', servetimeRouter);//服务管理路由
 app.use('/orderbuy', orderbuyRouter);//订单
 
+app.use("/storegoodtongji",storegoodtongjiRouter)
 app.use("/storeservetongji",storeservetongjiRouter)
 app.use('/orderbuied', orderbuiedRouter);//订单
 
