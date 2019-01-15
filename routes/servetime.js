@@ -6,72 +6,96 @@ client.url("127.0.0.1:8080");
 
 
 //服务路由
-router.post("/",async function (req,res) {
-     let {servetype,pets,severname,guige,
-        servetime,serveresource,price,desc,storeId,goodState}= req.body;
+router.post("/", async function (req, res) {
+        let { servetype, pets, severname, guige,
+                servetime, serveresource, price, desc, storeId, goodState } = req.body;
         console.log(req.body)
-     let data = await client.post("/serve", {servetype,pets,severname,guige,
-        servetime,serveresource,price,desc,goodState,
-        stores: {
-                $ref: "stores",
-                $id: storeId
-            }
+        let data = await client.post("/serve", {
+                servetype, pets, severname, guige,
+                servetime, serveresource, price, desc, goodState,
+                stores: {
+                        $ref: "stores",
+                        $id: storeId
+                }
         })
         res.send(data);
 })
 
 router.get("/", async function (req, res) {
-        let { type, text, page, rows ,storeId} = req.query;
+        let { type, text, page, rows, storeId } = req.query;
         let seraobj = {};
-        if (type) { 
-            seraobj = { [type]: text }
+        if (type) {
+                seraobj = { [type]: text }
         }
-        let data = await client.get("/serve", { page, rows, ...seraobj,  "stores.$id": storeId,
-         submitType: "findJoin", ref: "stores" })
+        let data = await client.get("/serve", {
+                page, rows, ...seraobj, "stores.$id": storeId,
+                submitType: "findJoin", ref: "stores"
+        })
         res.send(data);
 })
-    
+
 
 router.get("/deleteserve", async function (req, res) {
-        let { type, text, page, rows} = req.query;
+        let { type, text, page, rows } = req.query;
         let seraobj = {};
-        if (type) { 
-            seraobj = { [type]: text }
+        if (type) {
+                seraobj = { [type]: text }
         }
-        let data = await client.get("/serve", { page, rows, ...seraobj,
-         submitType: "findJoin", ref: "stores" })
+        let data = await client.get("/serve", {
+                page, rows, ...seraobj,
+                submitType: "findJoin", ref: "stores"
+        })
         res.send(data);
 })
 
-
+router.delete('/', async function (req, res, next) {
+        //根据上传的id添加电影
+        // let movieId = req.params.id;
+        let { data } = req.body;
+        data = JSON.parse(data);
+        let arrMovieId = [];
+        // 将多条数据的id存进数组
+        for (let i = 0; i < data.length; i++) {
+                arrMovieId.push(data[i]._id);
+        }
+        console.log("arrMovieId", arrMovieId);
+        // 一次性删除多条数据，ids是id集合
+        await client.delete("/serve", {
+                ids: arrMovieId
+        });
+        res.send({ status: 1 });
+});
 
 //删除
-router.delete("/:id",async function (req, res) {
+router.delete("/:id", async function (req, res) {
         console.log(1)
         let id = req.params.id
         await client.delete("/serve/" + id) //一定要加一个斜杠
         res.send({ status: 1 });
-    });
+});
 
 //查询
 router.get("/:id", async function (req, res) {
         let id = req.params.id;
-    
+
         let data = await client.get("/serve/" + id)
         res.send(data);
-    
+
 });
 //修改
 router.put('/:id', async function (req, res, next) {
-        let  id  = req.params.id
+        let id = req.params.id
         console.log(1)
-        let { servetype,pets,severname,guige,
-                servetime,serveresource,price,desc } = req.body
+        let { servetype, pets, severname, guige,
+                servetime, serveresource, price, desc } = req.body
         await client.put("/serve/" + id, {
-                servetype,pets,severname,guige,
-                servetime,serveresource,price,desc
+                servetype, pets, severname, guige,
+                servetime, serveresource, price, desc
         });
         console.log(1)
         res.send({ status: 1 })
-    });
+});
+
+
+
 module.exports = router;
