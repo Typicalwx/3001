@@ -103,6 +103,25 @@ router.delete('/:id', async function (req, res, next) {
 });
 
 
+router.delete('/', async function (req, res, next) {
+    //根据上传的id添加电影
+    // let movieId = req.params.id;
+    let { data } = req.body;
+    data = JSON.parse(data);
+    let arrMovieId = [];
+    // 将多条数据的id存进数组
+    for (let i = 0; i < data.length; i++) {
+            arrMovieId.push(data[i]._id);
+    }
+    console.log("suppliergoods", arrMovieId);
+    // 一次性删除多条数据，ids是id集合
+    await client.delete("/suppliergoods", {
+            ids: arrMovieId
+    });
+    res.send({ status: 1 });
+});
+
+
 /*供应商品修改*/
 router.put('/:id', async function (req, res, next) {
     let id = req.params.id
