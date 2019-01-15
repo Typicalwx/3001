@@ -74,12 +74,12 @@ router.post('/', async function (req, res) {
 //查询已完成
 router.get("/orderbuied", async function (req, res) {
 
-    let { type, text, page, rows } = req.query;
+    let { type, text, page, rows,storeId } = req.query;
     let seraobj = {};
     if (type) {
         seraobj = { [type]: text }
     }
-    let data = await client.get("/orderbuied", { page, rows, ...seraobj, submitType: "findJoin", ref: ["stores", "petmaster"] })
+    let data = await client.get("/orderbuied", { page, rows, ...seraobj, "stores.$id": storeId, submitType: "findJoin", ref: ["stores", "petmaster"] })
     res.send(data);
 })
 //查询已完成单个订单
@@ -93,13 +93,13 @@ router.get("/:id", async function (req, res) {
 
 //查询未完成订单
 router.get("/", async function (req, res) {
-    let { type, text, page, rows } = req.query;
+    let { type, text, page, rows ,storeId} = req.query;
     let seraobj = {};
     if (type) {
         seraobj = { [type]: text }
     }
 
-    let data = await client.get("/orderbuy", { page, rows, ...seraobj, submitType: "findJoin", ref: ["stores", "petmaster"] })
+    let data = await client.get("/orderbuy", { page, rows, ...seraobj,  "stores.$id": storeId,submitType: "findJoin", ref: ["stores", "petmaster"] })
     console.log(data)
     res.send(data);
 })
